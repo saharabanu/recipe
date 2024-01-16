@@ -5,11 +5,13 @@ import ingredients from "../../../../ingredients.json"
 
 const AllReciepi = () => {
     const [data, setData] = useState([]);
+   
     useEffect(() => {
-        fetch(ingredients)
+        fetch("./ingredients.json")
           .then((res) => res.json())
           .then((data) => console.log(data));
       }, []);
+    
 
     return (
         <div>
