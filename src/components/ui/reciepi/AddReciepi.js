@@ -3,6 +3,7 @@
 import { recipe_url } from "@/mainApi/api";
 import axios from "axios";
 import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
 
 const AddReciepi = ({ isOpen, onClose }) => {
   const {
@@ -14,18 +15,19 @@ const AddReciepi = ({ isOpen, onClose }) => {
 
   const onSubmit = async (data) => {
     try {
-      // Make a POST request to your API endpoint to insert data into the database
+     
       const response = await axios.post(`${recipe_url}/recipes`, data);
       if(response?.data?.insertedId){
-        alert(' recipe created')
+        toast.success(' recipe created')
+        
       }
       else{
-        alert('not created')
+        toast.error('not created')
       }
       
       onClose();
     } catch (error) {
-      console.error("Error adding recipe:", error);
+      toast.error("Error adding recipe:", error);
     }
   };
   if (!isOpen) {

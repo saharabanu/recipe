@@ -11,11 +11,20 @@ import { useSelector } from "react-redux";
 const AllReciepi = () => {
   const { search } = useSelector((state) => state.filter);
   const [allData, setAllData] = useState([]);
-  // ${}recipe_url/recipes"
+  const [loading, setLoading] = useState(true);
+
+  
   useEffect(() => {
-    fetch("https://recipe-server-blue.vercel.app/recipes")
+    fetch(`${recipe_url}/recipes`)
       .then((res) => res.json())
-      .then((data) => setAllData(data));
+      .then((data) => {
+        setAllData(data);
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.error("Error fetching data:", error);
+        setLoading(false);
+      });
   }, []);
 
   const allItems = allData;
@@ -35,6 +44,8 @@ console.log(filteredItems)
     setIsAddProductModalOpen(false);
   };
 
+ 
+
   return (
     <div className="py-20 ">
     <div className="flex justify-between items-center pb-10">
@@ -46,11 +57,18 @@ console.log(filteredItems)
         Add More
       </button>
     </div>
-      <div className="grid lg:grid-cols-4 gap-5">
-        {filteredItems?.map((item) => (
-          <SingleReciepi key={item?._id} item={item} />
-        ))}
-      </div>
+    {loading ? (
+        <div>Loading...</div>
+      ) : filteredItems && filteredItems.length > 0 ? (
+        <div className="grid lg:grid-cols-4 gap-5">
+          {filteredItems.map((item) => (
+            <SingleReciepi key={item?._id} item={item} />
+          ))}
+        </div>
+      ) : (
+        <div className="font-bold text-xl text-red-500">No data found</div>
+      )}
+    
 
       
 

@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { recipe_url } from "@/mainApi/api";
 import axios from "axios";
+import toast from "react-hot-toast";
 
 
 const EditPage = ({ id }) => {
@@ -23,10 +24,10 @@ const EditPage = ({ id }) => {
             setValue(field, response.data[field]);
           });
         } else {
-          console.error("Error fetching recipe details");
+          toast.error("Error fetching recipe details");
         }
       } catch (error) {
-        console.error("Error fetching recipe details:", error);
+        toast.error("Error fetching recipe details:", error);
       }
     };
 
@@ -36,9 +37,9 @@ const EditPage = ({ id }) => {
   const onSubmit = async (data) => {
     try {
       const response = await axios.put(`${recipe_url}/recipes/${id}`, data);
-      console.log(response, 'from edit')
+      // console.log(response, 'from edit')
       if (response.status === 200) {
-        alert('updated')
+        toast('updated')
         // Recipe updated successfully
         router.push("/");
       } else {
