@@ -1,0 +1,1 @@
+export  const recipe_url ='http://localhost:5000'

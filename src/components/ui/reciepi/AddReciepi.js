@@ -1,5 +1,7 @@
 "use client";
 
+import { recipe_url } from "@/mainApi/api";
+import axios from "axios";
 import { useForm } from "react-hook-form";
 
 const AddReciepi = ({ isOpen, onClose }) => {
@@ -10,7 +12,22 @@ const AddReciepi = ({ isOpen, onClose }) => {
     formState: { errors },
   } = useForm();
 
-  const onSubmit = (data) => console.log(data);
+  const onSubmit = async (data) => {
+    try {
+      // Make a POST request to your API endpoint to insert data into the database
+      const response = await axios.post(`${recipe_url}/recipes`, data);
+      if(response?.data?.insertedId){
+        alert(' recipe created')
+      }
+      else{
+        alert('not created')
+      }
+      
+      onClose();
+    } catch (error) {
+      console.error("Error adding recipe:", error);
+    }
+  };
   if (!isOpen) {
     return null;
   }
@@ -30,7 +47,7 @@ const AddReciepi = ({ isOpen, onClose }) => {
      <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text"  {...register("title", { required: true })}  placeholder="Enter Recipe Title" className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full" />
         <input type="text"  {...register("ingredients", { required: true })}  placeholder="Enter Recipe ingredients" className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full" />
-        <input type="text"  {...register("image", { required: true })}  placeholder="Enter Img url like: http://....png" className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full" />
+        {/* <input type="text"  {...register("image", { required: true })}  placeholder="Enter Img url like: http://....png" className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full" /> */}
         <textarea className="w-full my-2 px-3 py-3 outline-none h-24" type="text" {...register("instruction", { required: true })} placeholder="Enter recipe description ">
 
         </textarea>
