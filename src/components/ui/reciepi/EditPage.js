@@ -40,7 +40,7 @@ const EditPage = ({ id }) => {
       if (response.status === 200) {
         alert('updated')
         // Recipe updated successfully
-        // router.push(`/reciepes/details/${id}`);
+        router.push("/");
       } else {
         console.error("Error updating recipe");
       }
@@ -50,22 +50,22 @@ const EditPage = ({ id }) => {
   };
 
   return (
-    <div>
+    <div className="flex justify-center items-center bg-gray-200 px-20 pb-10">
       {recipeDetails ? (
         <form onSubmit={handleSubmit(onSubmit)}>
           {/* <label>Title</label> */}
-          <input {...register("title")}  className="border py-2 px-5"/>
+          <input {...register("title")}  className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full"/>
 
-          {/* <label>Ingredients</label>
-          <input {...register("ingredients")} />
+          <label>Ingredients</label>
+          <input {...register("ingredients")} className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full"/>
 
-          <label>Image</label>
-          <input {...register("image")} />
+          {/* <label>Image</label>
+          <input {...register("image")} /> */}
 
           <label>Instruction</label>
-          <textarea {...register("instruction")}></textarea> */}
+          <textarea {...register("instruction")} rows={10} className="px-3 py-3 rounded bg-gray-50 outline-none my-2 w-full h-full"></textarea>
 
-          <button type="submit" className="bg-yellow-500 text-white">Update Recipe</button>
+          <button type="submit" className="bg-yellow-500 px-5 py-3 rounded text-white my-2">Update Recipe</button>
         </form>
       ) : (
         <p>Loading...</p>
